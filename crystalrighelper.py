@@ -19,3 +19,13 @@ class Window(QtWidgets.QDialog):
         super().__init__(parent=get_maya_main_win())
         self.setWindowTitle("Crystal Rig Helper")
         self.resize(300, 450)
+        self.mk_layout()
+
+    def mk_layout(self):
+        self.layout = QtWidgets.QVBoxLayout(self)
+        # All pushbutton
+        color_all_btn = QtWidgets.QPushButton("All")
+        self.layout.addWidget(color_all_btn)
+        # Red button
+        # Blue button
+        # Yellow button
