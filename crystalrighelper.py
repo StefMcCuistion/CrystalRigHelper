@@ -27,6 +27,7 @@ class Window(QtWidgets.QDialog):
         self.red_button = self.mk_button("RED")
         self.blue_button = self.mk_button("BLUE")
         self.yellow_button = self.mk_button("YELLOW")
+        self.layout.addStretch()
 
     def mk_button(self, name=""):
         button = QtWidgets.QPushButton(name)
