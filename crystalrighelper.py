@@ -56,4 +56,21 @@ class Button(QtWidgets.QPushButton):
         self.idx = color["idx"]
 
     def behavior(self):
-        print("test")
+
+        selected_objs = cmds.ls(selection=True)
+        all_curves = cmds.ls("*_CON")
+        selected_curves = []
+
+        if not selected_objs:
+            cmds.warning("Nothing selected")
+            return
+        for curve in all_curves:
+            if curve in selected_objs:
+                selected_curves.append(curve)
+        if not selected_curves:
+            cmds.warning("No eligible curves selected")
+            return
+        for curve in selected_curves:
+            for s in cmds.listRelatives(curve, s=True):
+                cmds.setAttr(s + '.overrideEnabled', 1)
+                cmds.setAttr(s + '.overrideColor', self.idx)
