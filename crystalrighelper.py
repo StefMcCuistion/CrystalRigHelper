@@ -19,21 +19,41 @@ class Window(QtWidgets.QDialog):
         super().__init__(parent=get_maya_main_win())
         self.setWindowTitle("Crystal Rig Helper")
         self.resize(300, 450)
+        self.colors = [
+            {
+                "label": "RED",
+                "idx": 13,
+            },
+            {
+                "label": "BLUE",
+                "idx": 6,
+            },
+            {
+                "label": "YELLOW",
+                "idx": 22,
+            },
+        ]
         self.mk_layout()
 
     def mk_layout(self):
         self.layout = QtWidgets.QVBoxLayout(self)
-        self.color_all_button = self.mk_button("ALL")
-        self.red_button = self.mk_button("RED")
-        self.blue_button = self.mk_button("BLUE")
-        self.yellow_button = self.mk_button("YELLOW")
+        for color in self.colors:
+            self.mk_button(color)
         self.layout.addStretch()
 
-    def mk_button(self, name=""):
-        button = QtWidgets.QPushButton(name)
-        button.clicked.connect(self.apply_color)
+    def mk_button(self, color):
+        button = Button(color)
         self.layout.addWidget(button)
         return button
 
-    def apply_color(self):
-        print("Apply color")
+
+class Button(QtWidgets.QPushButton):
+
+    def __init__(self, color):
+        super().__init__(color["label"])
+        self.clicked.connect(self.behavior)
+        self.label = color["label"]
+        self.idx = color["idx"]
+
+    def behavior(self):
+        print("test")
