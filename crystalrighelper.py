@@ -42,18 +42,18 @@ class Window(QtWidgets.QDialog):
         self.layout.addStretch()
 
     def mk_button(self, color):
-        button = Button(color)
+        button = Button(color["label"], color["idx"])
         self.layout.addWidget(button)
         return button
 
 
 class Button(QtWidgets.QPushButton):
 
-    def __init__(self, color):
-        super().__init__(color["label"])
+    def __init__(self, label, idx):
+        super().__init__(label)
         self.clicked.connect(self.behavior)
-        self.label = color["label"]
-        self.idx = color["idx"]
+        self.label = label
+        self.idx = idx
 
     def behavior(self):
 
