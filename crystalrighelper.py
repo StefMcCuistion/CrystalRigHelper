@@ -24,8 +24,12 @@ class Window(QtWidgets.QDialog):
     def mk_layout(self):
         self.layout = QtWidgets.QVBoxLayout(self)
         # All pushbutton
-        self.color_all_btn = QtWidgets.QPushButton("All")
-        self.layout.addWidget(self.color_all_btn)
+        self.color_all_button = self.mk_button("ALL")
         # Red button
         # Blue button
         # Yellow button
+
+    def mk_button(self, name=""):
+        button = QtWidgets.QPushButton(name)
+        self.layout.addWidget(button)
+        return button
