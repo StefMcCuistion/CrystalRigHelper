@@ -31,5 +31,9 @@ class Window(QtWidgets.QDialog):
 
     def mk_button(self, name=""):
         button = QtWidgets.QPushButton(name)
+        button.clicked.connect(self.apply_color)
         self.layout.addWidget(button)
         return button
+
+    def apply_color(self):
+        print("Apply color")
