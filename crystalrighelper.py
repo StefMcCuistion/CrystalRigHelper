@@ -27,14 +27,17 @@ class Window(QtWidgets.QDialog):
             {
                 "name": "RED",
                 "idx": 13,
+                "convention": "R_*",
             },
             {
                 "name": "BLUE",
                 "idx": 6,
+                "convention": "L_*",
             },
             {
                 "name": "YELLOW",
                 "idx": 22,
+                "convention": None
             },
         ]
         buttons = []
@@ -51,21 +54,26 @@ class Window(QtWidgets.QDialog):
 
 class Button(QtWidgets.QPushButton):
 
-    def __init__(self, label, idx=None):
+    def __init__(self, label="Button"):
         super().__init__()
         self.label = label
-        self.idx = idx
         self.setText(self.label)
 
-        self.clicked.connect(self.do_behavior)
+        self.clicked.connect(self.do_btn_action)
 
-    def do_behavior(self):
-        cmds.warning("This button has no functionality.")
+    def do_btn_action(self):
+        cmds.warning("ERROR: Base Button class, no functionality. ")
 
 
-class ColorAllButton(Button):
+class ColorButton(Button):
 
-    def do_behavior(self):
+    def do_btn_action(self):
+        cmds.warning("ERROR: Base ColorButton class, no functionality.")
+
+
+class ColorAllButton(ColorButton):
+
+    def do_btn_action(self):
         # Define colors
         l_color = 6
         m_color = 17
@@ -92,9 +100,13 @@ class ColorAllButton(Button):
                 cmds.setAttr(s + '.overrideColor', color)
 
 
-class ColorSelectionButton(Button):
+class ColorSelectionButton(ColorButton):
 
-    def do_behavior(self):
+    def __init__(self, label, idx):
+        super().__init__(label)
+        self.idx = idx
+
+    def do_btn_action(self):
         selected_objs = cmds.ls(selection=True)
         all_curves = cmds.ls("*_CON")
         selected_curves = []
