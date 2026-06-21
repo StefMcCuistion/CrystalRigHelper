@@ -25,24 +25,24 @@ class Window(QtWidgets.QDialog):
         self.layout = QtWidgets.QVBoxLayout(self)
         colors = [
             {
-                "name": "RED",
+                "name": "Red",
                 "idx": 13,
                 "convention": "R_*",
             },
             {
-                "name": "BLUE",
+                "name": "Blue",
                 "idx": 6,
                 "convention": "L_*",
             },
             {
-                "name": "YELLOW",
+                "name": "Yellow",
                 "idx": 22,
                 "convention": None
             },
         ]
         buttons = []
 
-        buttons.append(ColorAllButton(label="COLOR ALL",))
+        buttons.append(ColorAllButton(label="Color All",))
         for color in colors:
             button = ColorSelectionButton(label=color["name"],
                                           idx=color["idx"],)
