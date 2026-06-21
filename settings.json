@@ -13,6 +13,11 @@
             {
                 "name": "Yellow",
                 "idx": 22,
+                "convention": "*"
+            },
+            {
+                "name": "Default",
+                "idx": 6,
                 "convention": ""
             }
         ],
