@@ -20,7 +20,6 @@ class Window(QtWidgets.QDialog):
         self.setWindowTitle("Crystal Rig Helper")
         self.resize(300, 450)
         self.import_settings()
-        self.update_settings()
         self.mk_layout()
 
     def import_settings(self):
@@ -30,29 +29,30 @@ class Window(QtWidgets.QDialog):
                   "r") as f:
             self.settings = json.load(f)
 
-    def update_settings(self):
-        self.colors = self.settings["colors"]
-
     def mk_layout(self):
         self.layout = QtWidgets.QVBoxLayout(self)
 
-        self.layout.addWidget(ColorAllButton(label="Color All",))
-
         color_selected_buttons = []
-        self.color_selected_btns_layout = QtWidgets.QGridLayout()
-        for color in self.colors:
+        self.color_selected_btns_grid = QtWidgets.QGridLayout()
+        for color in self.settings["colors"]:
             button = ColorSelectedButton(label=color["name"],
                                          idx=color["idx"],)
             color_selected_buttons.append(button)
+        grid_idx = 0
         for button in color_selected_buttons:
-            # row, col = self._get_row_col()
-            # self.color_selected_btns_layout.addWidget(button, row, col)
-            break
-        self.layout.addLayout(self.color_selected_btns_layout)
+            row, col = self._get_row_col(grid_idx)
+            self.color_selected_btns_grid.addWidget(button, row, col)
+            grid_idx += 1
+        self.layout.addLayout(self.color_selected_btns_grid)
+
+        self.layout.addWidget(ColorAllButton(label="Color All",))
+
         self.layout.addStretch()
 
-    def _get_row_col(self):
-        pass
+    def _get_row_col(self, idx):
+        row = idx // self.settings["grid columns"]
+        col = idx % self.settings["grid columns"]
+        return row, col
 
 
 class Button(QtWidgets.QPushButton):
