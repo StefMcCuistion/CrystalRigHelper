@@ -1,0 +1,19 @@
+{
+    "colors": [
+            {
+                "name": "Red",
+                "idx": 13,
+                "convention": "R_*"
+            },
+            {
+                "name": "Blue",
+                "idx": 6,
+                "convention": "L_*"
+            },
+            {
+                "name": "Yellow",
+                "idx": 22,
+                "convention": ""
+            }
+        ]
+}
