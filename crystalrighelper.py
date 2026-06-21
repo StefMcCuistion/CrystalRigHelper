@@ -40,14 +40,14 @@ class Window(QtWidgets.QDialog):
                 "convention": None
             },
         ]
-        buttons = []
+        color_selected_buttons = []
 
-        buttons.append(ColorAllButton(label="Color All",))
+        self.layout.addWidget(ColorAllButton(label="Color All",))
         for color in colors:
-            button = ColorSelectionButton(label=color["name"],
-                                          idx=color["idx"],)
-            buttons.append(button)
-        for button in buttons:
+            button = ColorSelectedButton(label=color["name"],
+                                         idx=color["idx"],)
+            color_selected_buttons.append(button)
+        for button in color_selected_buttons:
             self.layout.addWidget(button)
         self.layout.addStretch()
 
@@ -100,7 +100,7 @@ class ColorAllButton(ColorButton):
                 cmds.setAttr(s + '.overrideColor', color)
 
 
-class ColorSelectionButton(ColorButton):
+class ColorSelectedButton(ColorButton):
 
     def __init__(self, label, idx):
         super().__init__(label)
