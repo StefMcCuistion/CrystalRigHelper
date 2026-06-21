@@ -31,11 +31,59 @@ class Window(QtWidgets.QDialog):
             self.settings = json.load(f)
 
     def mk_layout(self):
-        self.layout = QtWidgets.QVBoxLayout(self)
+        # make tabs
+        self.tabs = Tabs(self)
+        pages = [ColorsPage(self.tabs),
+                 ShapesPage(self.tabs)]
+        for page in pages:
+            self.tabs.addTab(page, page.title)
 
+
+class Tabs(QtWidgets.QTabWidget):
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setMinimumSize(parent.settings["window size"][0],
+                            parent.settings["window size"][1])
+        self.settings = parent.settings
+
+
+class Page(QtWidgets.QWidget):
+
+    def __init__(self, parent, title):
+        super().__init__(parent)
+        self.title = title
+        self.settings = parent.settings
+
+    def _mk_layout(self):
+        self.layout = QtWidgets.QVBoxLayout(self)
+        self._mk_header()
+        self._mk_page_content()
+        self.layout.addStretch()
+
+    def _mk_header(self):
+        self._header = QtWidgets.QLabel(self.title,
+                                        self)
+        self._header.setStyleSheet("font-size: 20px; "
+                                   "font-weight: bold;")
+        self._header.setAlignment(QtCore.Qt.AlignCenter)
+        self.layout.addWidget(self._header)
+
+    def _mk_page_content(self):
+        self.layout.addWidget(QtWidgets.QLabel("No content. "))
+
+
+class ColorsPage(Page):
+
+    def __init__(self, parent, title="Colors"):
+        super().__init__(parent, title)
+        self.colors = self.settings["colors"]
+        self._mk_layout()
+
+    def _mk_page_content(self):
         color_selected_buttons = []
         self.color_selected_btns_grid = QtWidgets.QGridLayout()
-        for color in self.settings["colors"]:
+        for color in self.colors:
             button = ColorSelectedButton(label=color["name"],
                                          idx=color["idx"],)
             color_selected_buttons.append(button)
@@ -54,6 +102,16 @@ class Window(QtWidgets.QDialog):
         row = idx // self.settings["grid columns"]
         col = idx % self.settings["grid columns"]
         return row, col
+
+
+class ShapesPage(Page):
+
+    def __init__(self, parent, title="Shapes"):
+        super().__init__(parent, title)
+        self._mk_layout()
+
+    def _mk_page_content(self):
+        self.layout.addWidget(QtWidgets.QLabel("Shapes. "))
 
 
 class Button(QtWidgets.QPushButton):
