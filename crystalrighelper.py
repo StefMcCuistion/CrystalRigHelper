@@ -18,8 +18,9 @@ class Window(QtWidgets.QDialog):
     def __init__(self):
         super().__init__(parent=get_maya_main_win())
         self.setWindowTitle("Crystal Rig Helper")
-        self.resize(300, 450)
         self.import_settings()
+        self.resize(self.settings["window size"][0],
+                    self.settings["window size"][1])
         self.mk_layout()
 
     def import_settings(self):
